@@ -109,3 +109,5 @@ dist
 # Storybook
 .*storybook
 storybook-static
+
+.DS_Store
