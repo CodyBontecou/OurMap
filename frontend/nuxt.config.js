@@ -34,7 +34,7 @@ export default {
       },
       {
         rel: "stylesheet",
-        href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css",
+        href: "https://fonts.googleapis.com/icon?family=Material+Icons",
       }
     ]
   },
@@ -68,7 +68,7 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
     // Doc: https://github.com/nuxt/content
-    "@nuxt/content"
+    "@nuxt/content",
   ],
   /*
    ** Axios module configuration
