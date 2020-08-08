@@ -13,6 +13,10 @@ jobs:
         # of the current job in parallel
         machines: [1, 2, 3]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        with:
+          working-directory: frontend
       - name: Run e2e tests
         uses: cypress-io/github-action@v2
         with:
