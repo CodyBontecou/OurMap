@@ -120,7 +120,7 @@ export default {
 
               map.setView(
                 new L.LatLng(lat, lng),
-                17
+                16
               );
             },
             function error(error_message) {
