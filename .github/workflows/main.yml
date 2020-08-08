@@ -2,6 +2,10 @@ name: Parallel Cypress Tests
 
 on: [push]
 
+defaults:
+  run:
+    working-directory: ./frontend
+
 jobs:
   test:
     name: Cypress run
@@ -14,13 +18,11 @@ jobs:
         machines: [1, 2, 3]
     steps:
       - name: Checkout
-        working-directory: ./frontend
         uses: actions/checkout@v1
 
       # because of "record" and "parallel" parameters
       # these machines will load balance all found tests among themselves
       - name: Cypress run
-        working-directory: ./frontend
         uses: cypress-io/github-action@v1
         with:
           parallel: true
