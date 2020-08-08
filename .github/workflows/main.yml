@@ -14,8 +14,7 @@ jobs:
         machines: [1, 2, 3]
     steps:
       steps:
-        - uses: actions/checkout@master
-        - name: Install dependencies
+        - name: Run e2e tests
           uses: cypress-io/github-action@v2
           with:
             # just perform install
