@@ -110,8 +110,11 @@ dist
 .*storybook
 storybook-static
 
+# Misc
 .DS_Store
 
 # Cypress
-
 frontend/cypress/integration/examples
+
+# Nuxtjs
+frontend/static/sw.js
