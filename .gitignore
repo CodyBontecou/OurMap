@@ -114,4 +114,4 @@ storybook-static
 
 # Cypress
 
-frontend/cypress/integration*
+frontend/cypress/integration/examples
