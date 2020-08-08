@@ -16,5 +16,7 @@ jobs:
       - name: Run e2e tests
         uses: cypress-io/github-action@v2
         with:
-          # just perform install
           working-directory: frontend
+          build: yarn run build
+          start: yarn start
+          wait-on: 'http://localhost:3000'
