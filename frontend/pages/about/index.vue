@@ -5,14 +5,21 @@
       <h1 class="title block font-light">
         Our Map
       </h1>
+      <button @click="hitStrapi">strapi</button>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
+<script>
 
-export default Vue.extend({})
+export default {
+  methods: {
+    async hitStrapi() {
+      const locations = await this.$strapi.$locations.find()
+      console.log(locations)
+    }
+  }
+}
 </script>
 
 <style>

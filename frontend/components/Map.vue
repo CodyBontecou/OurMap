@@ -16,10 +16,11 @@ export default {
         lng: -98.5556199
       },
       zoomControl: false,
-      userLocationMarker: null
+      userLocationMarker: null,
+      locations: null
     };
   },
-  mounted() {
+  async mounted() {
     let map = L.map("map", {
       zoomControl: this.zoomControl
     }).setView([this.center.lat, this.center.lng], this.zoom);
@@ -166,6 +167,13 @@ export default {
     zoomUserLocation.addTo(map);
 
     new L.Hash(map);
+
+    await this.$strapi.$locations.find().then(response => {
+        for (let i = 0; i < response.length; i++) {
+          L.marker([response[i].latitude, response[i].longitude]).addTo(map)
+        }
+      }
+    );
 
     // Custom Icon
     // TODO: 1. Icon needs to properly scale with zoom. Currently as you zoom out the icon slowly moves away from the location.

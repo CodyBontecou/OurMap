@@ -58,7 +58,8 @@ export default {
   buildModules: [
     "@nuxt/typescript-build",
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    "@nuxtjs/tailwindcss"
+    "@nuxtjs/tailwindcss",
+    '@nuxtjs/sitemap'
   ],
   /*
    ** Nuxt.js modules
@@ -69,7 +70,13 @@ export default {
     "@nuxtjs/pwa",
     // Doc: https://github.com/nuxt/content
     "@nuxt/content",
+    '@nuxtjs/strapi',
   ],
+
+  strapi: {
+    url: process.env.STRAPI_URL || 'http://localhost:1337',
+    entities: ['locations', 'categories']
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
