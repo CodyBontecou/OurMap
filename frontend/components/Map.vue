@@ -32,11 +32,6 @@ export default {
 
     map.setMaxBounds([[-90, Number.NEGATIVE_INFINITY], [90, Number.POSITIVE_INFINITY]]);
 
-    navigator.permissions.query({ name: "geolocation" })
-      .then(function(permissionStatus) {
-        console.log("geolocation permission state is ", permissionStatus.state);
-      });
-
     if ("geolocation" in navigator) {
       navigator.permissions.query({ name: "geolocation" })
         .then(function(permissionStatus) {
@@ -57,8 +52,8 @@ export default {
         });
     }
 
+    const that = this;
     // custom zoom bar control that includes a Zoom Home function
-    let that = this;
     L.Control.ZoomUserLocation = L.Control.extend({
       options: {
         position: "bottomright",
@@ -106,6 +101,7 @@ export default {
       _zoomUserLocation: function() {
         if ("geolocation" in navigator) {
           // check if geolocation is supported/enabled on current browser
+          // TODO: 1. Not working on mobile browsers (Chrome + Firefox). Think I need SSL
           navigator.geolocation.getCurrentPosition(
             function success(position) {
               let lat = position.coords.latitude;
@@ -115,7 +111,6 @@ export default {
                 that.userLocationMarker.remove();
               }
 
-              // TODO: 1. Change marker to be more explicit and unique.
               that.userLocationMarker = L.marker([lat, lng]).addTo(map);
 
               map.setView(
@@ -170,165 +165,16 @@ export default {
     const zoomUserLocation = new L.Control.ZoomUserLocation();
     zoomUserLocation.addTo(map);
 
-    // URL Hashing
-    let HAS_HASHCHANGE = (function() {
-      const doc_mode = window.documentMode;
-      return ("onhashchange" in window) &&
-        (doc_mode === undefined || doc_mode > 7);
-    })();
-    L.Hash = function(map) {
-      this.onHashChange = L.Util.bind(this.onHashChange, this);
-
-      if (map) {
-        this.init(map);
-      }
-    };
-    L.Hash.parseHash = function(hash) {
-      if (hash.indexOf("#") === 0) {
-        hash = hash.substr(1);
-      }
-      let args = hash.split("/");
-      if (args.length === 3) {
-        let zoom = parseInt(args[0], 10),
-          lat = parseFloat(args[1]),
-          lon = parseFloat(args[2]);
-        if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
-          return false;
-        } else {
-          return {
-            center: new L.LatLng(lat, lon),
-            zoom: zoom
-          };
-        }
-      } else {
-        return false;
-      }
-    };
-    L.Hash.formatHash = function(map) {
-      const center = map.getCenter(),
-        zoom = map.getZoom(),
-        precision = Math.max(0, Math.ceil(Math.log(zoom) / Math.LN2));
-
-      return "#" + [zoom,
-        center.lat.toFixed(precision),
-        center.lng.toFixed(precision)
-      ].join("/");
-    };
-    L.Hash.prototype = {
-      map: null,
-      lastHash: null,
-
-      parseHash: L.Hash.parseHash,
-      formatHash: L.Hash.formatHash,
-
-      init: function(map) {
-        this.map = map;
-
-        // reset the hash
-        this.lastHash = null;
-        this.onHashChange();
-
-        if (!this.isListening) {
-          this.startListening();
-        }
-      },
-
-      removeFrom: function() {
-        if (this.changeTimeout) {
-          clearTimeout(this.changeTimeout);
-        }
-
-        if (this.isListening) {
-          this.stopListening();
-        }
-
-        this.map = null;
-      },
-
-      onMapMove: function() {
-        // bail if we're moving the map (updating from a hash),
-        // or if the map is not yet loaded
-
-        if (this.movingMap || !this.map._loaded) {
-          return false;
-        }
-
-        let hash = this.formatHash(this.map);
-        if (this.lastHash !== hash) {
-          location.replace(hash);
-          this.lastHash = hash;
-        }
-      },
-
-      movingMap: false,
-      update: function() {
-        const hash = location.hash;
-        if (hash === this.lastHash) {
-          return;
-        }
-        const parsed = this.parseHash(hash);
-        if (parsed) {
-          this.movingMap = true;
-
-          this.map.setView(parsed.center, parsed.zoom);
-
-          this.movingMap = false;
-        } else {
-          this.onMapMove(this.map);
-        }
-      },
-
-      // defer hash change updates every 100ms
-      changeDefer: 100,
-      changeTimeout: null,
-      onHashChange: function() {
-        // throttle calls to update() so that they only happen every
-        // `changeDefer` ms
-        if (!this.changeTimeout) {
-          const that = this;
-          this.changeTimeout = setTimeout(function() {
-            that.update();
-            that.changeTimeout = null;
-          }, this.changeDefer);
-        }
-      },
-
-      isListening: false,
-      hashChangeInterval: null,
-      startListening: function() {
-        this.map.on("moveend", this.onMapMove, this);
-
-        if (HAS_HASHCHANGE) {
-          L.DomEvent.addListener(window, "hashchange", this.onHashChange);
-        } else {
-          clearInterval(this.hashChangeInterval);
-          this.hashChangeInterval = setInterval(this.onHashChange, 50);
-        }
-        this.isListening = true;
-      },
-
-      stopListening: function() {
-        this.map.off("moveend", this.onMapMove, this);
-
-        if (HAS_HASHCHANGE) {
-          L.DomEvent.removeListener(window, "hashchange", this.onHashChange);
-        } else {
-          clearInterval(this.hashChangeInterval);
-        }
-        this.isListening = false;
-      }
-    };
-    L.hash = function(map) {
-      return new L.Hash(map);
-    };
-    L.Map.prototype.addHash = function() {
-      this._hash = L.hash(this);
-    };
-    L.Map.prototype.removeHash = function() {
-      this._hash.removeFrom();
-    };
-
     new L.Hash(map);
+
+    // Custom Icon
+    // TODO: 1. Icon needs to properly scale with zoom. Currently as you zoom out the icon slowly moves away from the location.
+    const customIcon = L.divIcon({
+      className: "custom-div-icon",
+      html: "<i class='material-icons text-blue-700'>fiber_manual_record</i>",
+      iconSize: [30, 42],
+      iconAnchor: [15, 42]
+    });
 
   }
 };
