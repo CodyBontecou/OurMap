@@ -77,6 +77,9 @@ export default {
     url: process.env.STRAPI_URL || 'http://localhost:1337',
     entities: ['locations', 'categories']
   },
+  sitemap: {
+    hostname: 'https://hotspringers.netlify.app',
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
