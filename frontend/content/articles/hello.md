@@ -13,6 +13,7 @@ Learn how to write your `content/`, supporting Markdown, YAML, CSV and JSON: htt
 
 Learn how to fetch your content with `$content`: https://content.nuxtjs.org/fetching.
 
-## Displaying content
+## Displaying Content
+
 
 Learn how to display your Markdown content with the `<nuxt-content>` component directly in your template: https://content.nuxtjs.org/displaying.
