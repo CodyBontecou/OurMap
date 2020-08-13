@@ -3,6 +3,8 @@
 </template>
 
 <script>
+// import { mapGetters } from 'vuex'
+
 export default {
   data: () => {
     return {
@@ -17,9 +19,11 @@ export default {
       },
       zoomControl: false,
       userLocationMarker: null,
-      locations: null
     };
   },
+  // computed: {
+  //   ...mapGetters(['locations'])
+  // },
   async mounted() {
     let map = L.map("map", {
       zoomControl: this.zoomControl
@@ -168,13 +172,6 @@ export default {
 
     new L.Hash(map);
 
-    await this.$strapi.$locations.find().then(response => {
-        for (let i = 0; i < response.length; i++) {
-          L.marker([response[i].latitude, response[i].longitude]).addTo(map)
-        }
-      }
-    );
-
     // Custom Icon
     // TODO: 1. Icon needs to properly scale with zoom. Currently as you zoom out the icon slowly moves away from the location.
     const customIcon = L.divIcon({
@@ -183,7 +180,11 @@ export default {
       iconSize: [30, 42],
       iconAnchor: [15, 42]
     });
-
+    this.$nextTick(() => {
+      for (let i = 0; i < this.locations; i++) {
+        L.marker([this.locations[i].latitude, this.locations[i].longitude]).addTo(map)
+      }
+    })
   }
 };
 </script>
