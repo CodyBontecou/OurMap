@@ -102,8 +102,8 @@ export default {
             let lat = position.coords.latitude;
             let lng = position.coords.longitude;
 
-            that.userLocationMarker = L.marker([lat, lng]).addTo(map);
-            map.setView(new L.LatLng(lat, lng), 16);
+            that.userLocationMarker = that.$L.marker([lat, lng]).addTo(map);
+            map.setView(new that.$L.LatLng(lat, lng), 16);
           },
           function error(error_message) {
             // for when getting location results in an error
