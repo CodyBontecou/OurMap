@@ -46,7 +46,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [{ src: "@/plugins/leaflet.js", mode: "client" },],
+  plugins: [{ src: "@/plugins/leaflet.js", mode: "client" }, { src: '~plugins/vue2leaflet.js', ssr: false }],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -71,6 +71,8 @@ export default {
     // Doc: https://github.com/nuxt/content
     "@nuxt/content",
     '@nuxtjs/strapi',
+    // With options
+    ['nuxt-leaflet', { /* module options */ }],
   ],
 
   strapi: {

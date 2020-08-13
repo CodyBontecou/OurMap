@@ -23,7 +23,9 @@
     "cypress-browser-permissions": "^1.0.5",
     "leaflet": "^1.6.0",
     "material-design-icons": "^3.0.1",
-    "nuxt": "^2.14.0"
+    "nuxt": "^2.14.0",
+    "nuxt-leaflet": "^0.0.21",
+    "vue2-leaflet": "^2.5.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.0",
