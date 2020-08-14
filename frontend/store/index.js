@@ -1,5 +1,5 @@
 export const state = () => ({
-  locations: null,
+  locations: [],
   zoom: 3,
   map: null,
 });
@@ -40,8 +40,13 @@ export const actions = {
   },
   //TODO: Currently only getting the first 100 due to pagination
   async fetchLocations({ commit }) {
-    await this.$strapi.$locations.find().then(response => {
-      commit("setLocations", response);
-    });
+    try {
+      await this.$strapi.$locations.find().then(response => {
+        commit("setLocations", response);
+      });
+    }
+    catch (e) {
+      console.log(e)
+    }
   }
 };
