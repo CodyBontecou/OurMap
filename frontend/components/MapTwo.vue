@@ -18,17 +18,18 @@
           :url="tileProvider.url"
           :attribution="tileProvider.attribution"
           layer-type="base"/>
+
         <vue-leaflet-minimap
+          ref="minimap"
           :layer="minimapLayer"
           :options="minimapOptions"
-          @click="switchLayer"
+          @ready="initToggleLayer()"
         />
+
         <v-marker-cluster>
           <l-marker :lat-lng="[location.latitude, location.longitude]" v-for="location in locations" :key="location.id">
             <l-popup>
-              <div @click="innerClick">
-                {{ location.name }}
-              </div>
+              {{ location.name }}
             </l-popup>
           </l-marker>
         </v-marker-cluster>
@@ -88,6 +89,8 @@ export default {
       },
       userLocationMarker: null,
       minimapLayer: null,
+      satelliteLayer: null,
+      openStreetMapLayer: null,
       minimapOptions: {
         position: "bottomleft",
         width: 75,
@@ -109,9 +112,6 @@ export default {
     },
     showLongText() {
       this.showParagraph = !this.showParagraph;
-    },
-    innerClick() {
-      alert("Click!");
     },
     zoomIn() {
       this.$store.commit("zoomIn");
@@ -145,12 +145,36 @@ export default {
         );
       }
     },
-    switchLayer() {
-      console.log(this.minimapLayer);
-    }
+    initToggleLayer() {
+      const that = this;
+      const minimap = this.$refs.minimap
+
+      function toggleLayer () {
+        if (that.minimapLayer === that.satelliteLayer) {
+          that.minimapLayer = that.openStreetMapLayer
+          minimap.changeLayer(that.openStreetMapLayer)
+          that.tileProviders[0].visible = false
+          that.tileProviders[1].visible = true
+        }
+        else if (that.minimapLayer === that.openStreetMapLayer) {
+          that.minimapLayer = that.satelliteLayer
+          minimap.changeLayer(that.satelliteLayer)
+          that.tileProviders[0].visible = true
+          that.tileProviders[1].visible = false
+        }
+      }
+
+      const minimapGetter = document.getElementsByClassName('leaflet-control-minimap')
+      if (minimapGetter.length > 0) {
+        minimapGetter[0].addEventListener("click", toggleLayer);
+      }
+
+    },
   },
   mounted() {
-    this.minimapLayer = new this.$L.TileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png");
+    this.openStreetMapLayer = new this.$L.TileLayer(this.tileProviders[0].url);
+    this.satelliteLayer = new this.$L.TileLayer(this.tileProviders[1].url);
+    this.minimapLayer = this.satelliteLayer
   }
 };
 </script>
