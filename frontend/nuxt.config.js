@@ -35,7 +35,7 @@ export default {
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/icon?family=Material+Icons",
-      }
+      },
     ]
   },
   /*
@@ -43,13 +43,17 @@ export default {
    */
   css: [
     "@/assets/css/MarkerCluster.css",
-    "@/assets/css/MarkerCluster.Default.css"
+    "@/assets/css/MarkerCluster.Default.css",
+    { src: 'leaflet-minimap/dist/Control.MiniMap.min.css', lang: 'css' }
   ],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [{ src: "@/plugins/vue2leaflet-marker-cluster.js", mode: "client" },],
+  plugins: [
+    { src: "@/plugins/vue2leaflet-marker-cluster.js", mode: "client" },
+    { src: "@/plugins/leaflet-minimap.js", mode: "client" },
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components

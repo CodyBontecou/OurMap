@@ -9352,6 +9352,11 @@ lazy-universal-dotenv@^3.0.1:
     dotenv "^8.0.0"
     dotenv-expand "^5.1.0"
 
+leaflet-minimap@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/leaflet-minimap/-/leaflet-minimap-3.6.1.tgz#2a43ff3b3d947a45a0acf4bdefc96505b673a6c6"
+  integrity sha1-KkP/Oz2UekWgrPS978llBbZzpsY=
+
 leaflet.markercluster@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.4.1.tgz#b53f2c4f2ca7306ddab1dbb6f1861d5e8aa6c5e5"
@@ -14903,6 +14908,14 @@ vue-jest@^3.0.4:
     source-map "^0.5.6"
     tsconfig "^7.0.0"
     vue-template-es2015-compiler "^1.6.0"
+
+vue-leaflet-minimap@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-leaflet-minimap/-/vue-leaflet-minimap-1.0.2.tgz#2a26a54964f0e5e360a3b10bf43e294e25a2a220"
+  integrity sha512-OvLE/T1Gi+w2/4E1/g9fcnen8oncSGqvXG2YgIeWYg8x0EqBfO35aL3IDsc7idSygyJKtQnTeuFA+/wLCkE1qQ==
+  dependencies:
+    leaflet-minimap "^3.6.1"
+    vue2-leaflet "^2.5.2"
 
 vue-loader@^15.9.3:
   version "15.9.3"

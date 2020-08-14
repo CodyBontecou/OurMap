@@ -10,7 +10,6 @@
         @update:center="centerUpdate"
         @update:zoom="zoomUpdate"
       >
-        <l-control-layers position="topright" />
         <l-tile-layer
           v-for="tileProvider in tileProviders"
           :key="tileProvider.name"
@@ -19,14 +18,19 @@
           :url="tileProvider.url"
           :attribution="tileProvider.attribution"
           layer-type="base"/>
+        <vue-leaflet-minimap
+          :layer="minimapLayer"
+          :options="minimapOptions"
+          @click="switchLayer"
+        />
         <v-marker-cluster>
           <l-marker :lat-lng="[location.latitude, location.longitude]" v-for="location in locations" :key="location.id">
-          <l-popup>
-            <div @click="innerClick">
-              {{ location.name }}
-            </div>
-          </l-popup>
-        </l-marker>
+            <l-popup>
+              <div @click="innerClick">
+                {{ location.name }}
+              </div>
+            </l-popup>
+          </l-marker>
         </v-marker-cluster>
 
         <l-control position="bottomright">
@@ -62,17 +66,17 @@ export default {
     return {
       tileProviders: [
         {
-          name: 'OpenStreetMap',
+          name: "OpenStreetMap",
           visible: true,
           attribution:
-            '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            "&copy; <a target=\"_blank\" href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
+          url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         },
         {
-          name: 'Satellite View',
+          name: "Satellite View",
           visible: false,
-          url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png',
-          attribution:'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+          url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png",
+          attribution: "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
 
         }
       ],
@@ -82,11 +86,18 @@ export default {
         zoomSnap: 0.5,
         zoomControl: false
       },
-      userLocationMarker: null
+      userLocationMarker: null,
+      minimapLayer: null,
+      minimapOptions: {
+        position: "bottomleft",
+        width: 75,
+        height: 75,
+        zoomLevelFixed: true
+      }
     };
   },
   computed: {
-    ...mapGetters({ locations: "getLocations", zoom: "getZoom",  center: "getCenter" })
+    ...mapGetters({ locations: "getLocations", zoom: "getZoom", center: "getCenter" })
   },
   methods: {
     zoomUpdate(zoom) {
@@ -133,7 +144,13 @@ export default {
           }
         );
       }
+    },
+    switchLayer() {
+      console.log(this.minimapLayer);
     }
+  },
+  mounted() {
+    this.minimapLayer = new this.$L.TileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png");
   }
 };
 </script>
@@ -152,5 +169,9 @@ export default {
 
 .btn:hover {
   @apply bg-gray-300;
+}
+
+.leaflet-control-minimap {
+  border-radius: 10px !important;
 }
 </style>
