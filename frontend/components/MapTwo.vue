@@ -14,13 +14,16 @@
           :url="url"
           :attribution="attribution"
         />
-        <l-marker :lat-lng="[location.latitude, location.longitude]" v-for="location in locations" :key="location.id">
+        <v-marker-cluster>
+          <l-marker :lat-lng="[location.latitude, location.longitude]" v-for="location in locations" :key="location.id">
           <l-popup>
             <div @click="innerClick">
               {{ location.name }}
             </div>
           </l-popup>
         </l-marker>
+        </v-marker-cluster>
+
         <l-control position="bottomright">
           <button
             class="btn border-b border-gray-300 rounded-t"

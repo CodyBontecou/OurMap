@@ -41,12 +41,15 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    "@/assets/css/MarkerCluster.css",
+    "@/assets/css/MarkerCluster.Default.css"
+  ],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: [{ src: "@/plugins/vue2leaflet-marker-cluster.js", mode: "client" },],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
