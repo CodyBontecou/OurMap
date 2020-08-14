@@ -1,6 +1,7 @@
 export const state = () => ({
   locations: [],
-  zoom: 3,
+  zoom: 5,
+  center: [39.8097343, -98.5556199],
   map: null,
 });
 
@@ -13,6 +14,9 @@ export const getters = {
   },
   getMap(state) {
     return state.map
+  },
+  getCenter(state) {
+    return state.center
   }
 };
 
@@ -31,6 +35,9 @@ export const mutations = {
   },
   setMap(state, map) {
     state.map = map
+  },
+  setCenter(state, center) {
+    state.center = center
   }
 };
 

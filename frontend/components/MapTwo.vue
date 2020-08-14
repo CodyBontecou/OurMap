@@ -10,10 +10,15 @@
         @update:center="centerUpdate"
         @update:zoom="zoomUpdate"
       >
+        <l-control-layers position="topright" />
         <l-tile-layer
-          :url="url"
-          :attribution="attribution"
-        />
+          v-for="tileProvider in tileProviders"
+          :key="tileProvider.name"
+          :name="tileProvider.name"
+          :visible="tileProvider.visible"
+          :url="tileProvider.url"
+          :attribution="tileProvider.attribution"
+          layer-type="base"/>
         <v-marker-cluster>
           <l-marker :lat-lng="[location.latitude, location.longitude]" v-for="location in locations" :key="location.id">
           <l-popup>
@@ -55,11 +60,22 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      center: [39.8097343, -98.5556199],
-      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      attribution:
-        "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
-      withPopup: [47.41322, -1.219482],
+      tileProviders: [
+        {
+          name: 'OpenStreetMap',
+          visible: true,
+          attribution:
+            '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+          url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        },
+        {
+          name: 'Satellite View',
+          visible: false,
+          url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png',
+          attribution:'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+
+        }
+      ],
       currentZoom: 11.5,
       currentCenter: [47.41322, -1.219482],
       mapOptions: {
@@ -70,7 +86,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ locations: "getLocations", zoom: "getZoom" })
+    ...mapGetters({ locations: "getLocations", zoom: "getZoom",  center: "getCenter" })
   },
   methods: {
     zoomUpdate(zoom) {
