@@ -18,8 +18,7 @@
           :url="tileProvider.url"
           :attribution="tileProvider.attribution"
           layer-type="base"/>
-
-        <vue-leaflet-minimap
+        <v-leaflet-minimap
           ref="minimap"
           :layer="minimapLayer"
           :options="minimapOptions"
@@ -33,6 +32,14 @@
             </l-popup>
           </l-marker>
         </v-marker-cluster>
+
+        <l-control position="topleft">
+          <SearchBar />
+        </l-control>
+
+        <l-control position="topright">
+          <Navigation />
+        </l-control>
 
         <l-control position="bottomright">
           <button
@@ -73,12 +80,12 @@ export default {
             "&copy; <a target=\"_blank\" href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
           url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         },
+        // TODO: Super long attribution wraps in an odd way on mobile.
         {
           name: "Satellite View",
           visible: false,
           url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png",
           attribution: "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-
         }
       ],
       currentZoom: 11.5,
@@ -96,16 +103,16 @@ export default {
         width: 75,
         height: 75,
         zoomLevelFixed: true
-      }
+      },
     };
   },
   computed: {
     ...mapGetters({ locations: "getLocations", zoom: "getZoom", center: "getCenter" })
   },
   methods: {
+    // TODO: Zoom levels should impact css classes on zoom buttons when max/min zoom level
     zoomUpdate(zoom) {
-      this.currentZoom = zoom;
-      this.$store.commit("setZoom", this.currentZoom);
+      this.$store.commit("setZoom", zoom);
     },
     centerUpdate(center) {
       this.currentCenter = center;
@@ -193,9 +200,5 @@ export default {
 
 .btn:hover {
   @apply bg-gray-300;
-}
-
-.leaflet-control-minimap {
-  border-radius: 10px !important;
 }
 </style>
