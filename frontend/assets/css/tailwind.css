@@ -5,3 +5,11 @@
 .container {
   @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
+
+.tooltip .tooltip-text {
+  @apply invisible absolute inline-block p-1 mt-16 -ml-2 z-1000 text-sm rounded-lg bg-black text-white;
+}
+
+.tooltip:hover .tooltip-text {
+  @apply visible;
+}

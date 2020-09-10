@@ -33,9 +33,9 @@
           </l-marker>
         </v-marker-cluster>
 
-        <l-control position="topleft">
+        <div class="absolute z-1000" style="top: 0; left: 0;">
           <SearchBar />
-        </l-control>
+        </div>
 
         <l-control position="topright">
           <Navigation />

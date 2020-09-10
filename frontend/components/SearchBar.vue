@@ -1,21 +1,43 @@
 <template>
-  <div class="w-full max-w-xs">
-    <form class="bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4 rounded-lg">
-      <div class="mb-4 border-r border-gray-900">
-        <label for="username"></label><input
-          class="appearance-none w-full py-2 px-3 text-gray-700 text-md leading-tight border-b border-gray-900 focus:outline-none"
-          id="username" type="text" placeholder="Search Hotspringers">
+  <div class="flex items-center ml-2 mt-2 bg-white rounded-t-lg" style="width: 355px; height: 44px;">
+    <form class="flex">
+      <div class="flex items-center pl-3 pr-5 tooltip">
+
+        <button>
+          <i class="material-icons text-xl text-gray-700 hover:text-gray-900">menu</i>
+        </button>
+        <span class='tooltip-text'>Menu</span>
       </div>
+
+      <div class="text-base">
+        <label for="searchInput"></label>
+        <input
+          class="bg-white focus:outline-none rounded-lg block w-full appearance-none text-gray-700"
+          id="searchInput" type="text" placeholder="Search Hotspringers" style="width: 215px;">
+      </div>
+
+      <div class="flex items-center px-3 tooltip">
+        <button>
+          <i class="material-icons text-xl text-gray-500">search</i>
+        </button>
+        <span class='tooltip-text'>Search</span>
+      </div>
+
+      <div class="divider bg-gray-200"></div>
+
+      <div class="flex items-center px-3 tooltip">
+        <button>
+          <i class="material-icons text-xl text-blue-500 hover:text-blue-600">directions</i>
+        </button>
+        <span class='tooltip-text'>Directions</span>
+      </div>
+
     </form>
   </div>
 </template>
 
-<script>
-export default {
-  name: "SearchBar"
-};
-</script>
-
-<style scoped>
-
+<style>
+.divider {
+  width: 1px;
+}
 </style>
