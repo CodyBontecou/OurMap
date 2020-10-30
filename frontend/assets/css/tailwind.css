@@ -7,7 +7,15 @@
 }
 
 .tooltip .tooltip-text {
-  @apply invisible absolute inline-block p-1 mt-16 -ml-2 z-1000 text-sm rounded-lg bg-black text-white;
+  @apply invisible absolute inline-block p-1 z-1000 rounded-lg bg-black text-white capitalize;
+}
+
+.bottom {
+  @apply mt-16 -ml-2
+}
+
+.left {
+  @apply -ml-22
 }
 
 .tooltip:hover .tooltip-text {
