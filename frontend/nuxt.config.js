@@ -1,3 +1,8 @@
+const strapiUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:1337'
+    : 'https://hotspringers-api.herokuapp.com'
+
 export default {
   mode: 'universal',
   target: 'static',
@@ -46,7 +51,7 @@ export default {
     'nuxt-i18n',
   ],
   strapi: {
-    url: process.env.STRAPI_URL || 'http://localhost:1337',
+    url: strapiUrl,
     entities: ['locations', 'categories'],
   },
   sitemap: {
