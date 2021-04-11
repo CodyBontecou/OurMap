@@ -38,6 +38,12 @@
     },
     "address_components": {
       "collection": "address-component"
+    },
+    "tempF": {
+      "type": "string"
+    },
+    "tempC": {
+      "type": "string"
     }
   }
 }
