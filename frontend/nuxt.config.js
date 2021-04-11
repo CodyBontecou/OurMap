@@ -1,18 +1,6 @@
 export default {
-  /*
-   ** Nuxt rendering mode
-   ** See https://nuxtjs.org/api/configuration-mode
-   */
   mode: 'universal',
-  /*
-   ** Nuxt target
-   ** See https://nuxtjs.org/api/configuration-target
-   */
   target: 'static',
-  /*
-   ** Headers of the page
-   ** See https://nuxtjs.org/api/configuration-head
-   */
   head: {
     title: 'Our Map | Mapped Interests | Open Sourced | Crowd Sourced',
     meta: [
@@ -33,65 +21,37 @@ export default {
       },
     ],
   },
-  /*
-   ** Global CSS
-   */
   css: [
     '@/assets/css/MarkerCluster.css',
     '@/assets/css/MarkerCluster.Default.css',
     { src: 'leaflet-minimap/dist/Control.MiniMap.min.css', lang: 'css' },
   ],
-  /*
-   ** Plugins to load before mounting the App
-   ** https://nuxtjs.org/guide/plugins
-   */
   plugins: [
     { src: '@/plugins/vue2leaflet-marker-cluster.js', mode: 'client' },
     { src: '@/plugins/leaflet-minimap.js', mode: 'client' },
   ],
-  /*
-   ** Auto import components
-   ** See https://nuxtjs.org/api/configuration-components
-   */
   components: true,
-  /*
-   ** Nuxt.js dev-modules
-   */
   buildModules: [
     '@nuxt/typescript-build',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
     '@nuxtjs/sitemap',
   ],
-  /*
-   ** Nuxt.js modules
-   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt/content
     '@nuxt/content',
     '@nuxtjs/strapi',
-    // With options
-    [
-      'nuxt-leaflet',
-      {
-        /* module options */
-      },
-    ],
+    'nuxt-leaflet',
     'nuxt-i18n',
   ],
-
   strapi: {
     url: process.env.STRAPI_URL || 'http://localhost:1337',
     entities: ['locations', 'categories'],
   },
-
   sitemap: {
     hostname: 'https://hotspringers.netlify.app',
   },
-
   i18n: {
     baseUrl: 'https://hotspringers.netlify.app',
     lazy: true,
@@ -127,10 +87,4 @@ export default {
       },
     },
   },
-
-  axios: {},
-
-  content: {},
-
-  build: {},
 }
