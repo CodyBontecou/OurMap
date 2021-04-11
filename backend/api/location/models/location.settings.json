@@ -35,6 +35,9 @@
     },
     "description": {
       "type": "string"
+    },
+    "address_components": {
+      "collection": "address-component"
     }
   }
 }

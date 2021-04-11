@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "address_components",
+  "info": {
+    "name": "Address Component"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "long_name": {
+      "type": "string"
+    },
+    "short_name": {
+      "type": "string"
+    },
+    "types": {
+      "type": "json"
+    }
+  }
+}
