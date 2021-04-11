@@ -57,7 +57,13 @@ export const mutations = {
   setSearching(state, searching) {
     state.searching = searching
   },
+  SET_SEARCHING(state, searching) {
+    state.searching = searching
+  },
   setFocus(state, obj) {
+    state.focus = obj
+  },
+  SET_FOCUS(state, obj) {
     state.focus = obj
   },
 }
@@ -77,5 +83,11 @@ export const actions = {
     } catch (e) {
       console.log(e)
     }
+  },
+  _setSearching: ({ commit }, payload) => {
+    commit('SET_SEARCHING', payload)
+  },
+  _setFocus: ({ commit }, payload) => {
+    commit('SET_FOCUS', payload)
   },
 }

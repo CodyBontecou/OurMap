@@ -32,6 +32,7 @@
     },
     methods: {
       emitFocus(obj) {
+        console.log(obj)
         this.$root.$emit('focus', obj)
       },
     },
