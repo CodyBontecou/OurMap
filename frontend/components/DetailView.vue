@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute z-1000 flex flex-col bg-white" style="top: 0; left: 0;">
+  <div class="absolute z-1000 flex flex-col" style="top: 0; left: 0;">
     <SearchInput
       class="m-2 border border-gray-200 rounded-lg"
       :items="locations"
