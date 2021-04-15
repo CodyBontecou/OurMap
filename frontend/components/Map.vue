@@ -45,6 +45,7 @@
 
         <l-control position="bottomright">
           <button
+            id="userLocationBtn"
             class="btn border-b border-gray-300 rounded-t tooltip"
             @click="userLocation"
           >
@@ -54,6 +55,7 @@
             </span>
           </button>
           <button
+            id="zoomInBtn"
             class="btn tooltip"
             :class="{ 'cursor-not-allowed': zoom === 18 }"
             @click="zoomIn"
@@ -64,6 +66,7 @@
             </span>
           </button>
           <button
+            id="zoomOutBtn"
             class="btn border-t border-gray-300 rounded-b tooltip"
             @click="zoomOut"
           >
