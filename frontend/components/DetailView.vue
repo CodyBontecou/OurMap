@@ -1,12 +1,9 @@
 <template>
   <div class="absolute z-1000 flex flex-col" style="top: 0; left: 0;">
-    <SearchInput
-      class="m-2 border border-gray-200 rounded-lg"
-      :items="locations"
-    />
-    <SearchResults v-show="searching" class="pb-2" :results="results" />
-
-    <div v-show="searching" class="horizontal-divider bg-gray-200"></div>
+    <div
+      v-show="searching && results.length > 0"
+      class="horizontal-divider bg-gray-200"
+    ></div>
 
     <div v-if="focus" class="pt-2" style="height: 500px; max-height: 100%;">
       <button class="p-4 rounded-full" @click="setFocus(false)">
