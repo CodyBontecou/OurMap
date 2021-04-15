@@ -5,20 +5,21 @@
  ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
  */
 module.exports = {
+  mode: 'jit',
   theme: {
     zIndex: {
       '-1': '-1',
-      '1000': '1000',
+      1000: '1000',
     },
     extend: {
       spacing: {
-        '22': '5.25rem',
-        '72': '18rem',
-        '84': '21rem',
-        '96': '24rem',
+        22: '5.25rem',
+        72: '18rem',
+        84: '21rem',
+        96: '24rem',
       },
       margin: {
-        '14': '3.25rem',
+        14: '3.25rem',
       },
     },
   },
