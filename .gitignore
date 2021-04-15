@@ -118,3 +118,5 @@ frontend/cypress/integration/examples
 
 # Nuxtjs
 frontend/static/sw.js
+
+utils/data
