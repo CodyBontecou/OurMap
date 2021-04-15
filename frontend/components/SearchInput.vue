@@ -2,7 +2,7 @@
   <div
     class="flex items-center"
     :class="{ 'border-b': results.length > 0 }"
-    style="height: 44px;"
+    style="height: 44px"
   >
     <form class="flex">
       <div class="flex items-center pl-3 pr-5 tooltip">
@@ -11,7 +11,7 @@
             menu
           </i>
         </button>
-        <span class="tooltip-text bottom text-xs">
+        <span class="tooltip-text bottom text-xs font-medium">
           {{ $t('menu') }}
         </span>
       </div>
@@ -21,11 +21,11 @@
         <input
           id="searchInput"
           v-model="search"
-          class="focus:outline-none rounded-lg block w-full appearance-none placeholder-gray-700 capitalize"
+          class="focus:outline-none rounded-lg block w-full appearance-none placeholder-gray-700 placeholder-font-medium capitalize"
           type="text"
           :placeholder="i18n.placeholder"
           autocomplete="off"
-          style="width: 215px;"
+          style="width: 215px"
           @input="onChange"
         />
       </div>
@@ -39,7 +39,7 @@
             search
           </i>
         </button>
-        <span class="tooltip-text bottom text-xs">
+        <span class="tooltip-text bottom text-xs font-medium">
           {{ $t('search') }}
         </span>
       </div>
@@ -52,7 +52,7 @@
             directions
           </i>
         </button>
-        <span class="tooltip-text bottom text-xs">
+        <span class="tooltip-text bottom text-xs font-medium">
           {{ $t('directions') }}
         </span>
       </div>
@@ -87,9 +87,7 @@
     },
     methods: {
       onChange() {
-        if (!this.searching) {
-          this.$store.commit('setSearching', true)
-        }
+        this.enableSearching()
         this.filterResults()
       },
       filterResults() {
@@ -101,8 +99,10 @@
         this.$store.commit('setResults', results)
       },
       enableSearching() {
-        if (!this.searching) {
+        if (!this.searching && this.search.length > 0) {
           this.$store.commit('setSearching', true)
+        } else if (this.search.length === 0) {
+          this.$store.commit('setSearching', false)
         }
       },
     },
