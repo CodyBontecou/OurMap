@@ -2,7 +2,6 @@
   <div id="main">
     <Map />
     <SearchBar />
-    <DetailView />
   </div>
 </template>
 
