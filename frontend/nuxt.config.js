@@ -4,10 +4,9 @@ const strapiUrl =
     : 'https://hotspringers-api.herokuapp.com'
 
 export default {
-  mode: 'universal',
   target: 'static',
   head: {
-    title: 'Our Map | Mapped Interests | Open Sourced | Crowd Sourced',
+    title: 'Hotspringers | Mapped Interests | Open Sourced | Crowd Sourced',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -38,7 +37,6 @@ export default {
   components: true,
   buildModules: [
     '@nuxt/typescript-build',
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
     '@nuxtjs/sitemap',
   ],
