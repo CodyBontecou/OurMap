@@ -1,11 +1,14 @@
-import axios from "axios"
+import axios from 'axios'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 // TODO: Needs to take into account pagination
 async function getLocations() {
   // Fetches all locations
   try {
     const { data } = await axios
-      .get("http://localhost:1337/locations")
+      .get('http://localhost:1337/locations')
       .catch((error) => console.error(error))
     return data
   } catch (error) {
@@ -17,7 +20,7 @@ async function getLocation(id) {
   // Given an id, we will fetch a single location
   try {
     const { data } = await axios
-      .get("http://localhost:1337/locations/" + id)
+      .get('http://localhost:1337/locations/' + id)
       .catch((error) => console.error(error))
     return data
   } catch (error) {
@@ -29,7 +32,7 @@ async function updateLocation(id, data, token) {
   // Given an id, we will update a single location with the provided data
   try {
     const response = await axios
-      .put("http://localhost:1337/locations/" + id, data, {
+      .put('http://localhost:1337/locations/' + id, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,28 +47,11 @@ async function updateLocation(id, data, token) {
 async function strapiLogin() {
   try {
     const { data } = await axios
-      .post("http://localhost:1337/auth/local", {
+      .post('https://hotspringers-api.herokuapp.com/auth/local', {
         identifier: process.env.STRAPI_LOGIN,
         password: process.env.STRAPI_PASSWORD,
       })
-      .catch((error) => console.error(error))
-    return data
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-async function createAddressComponent(component, token) {
-  try {
-    const { data } = await axios.post(
-      "http://localhost:1337/address-components",
-      component,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+      .catch((error) => console.error(error.response.data.data[0].messages))
     return data
   } catch (error) {
     console.error(error)
@@ -76,6 +62,23 @@ async function getToken() {
   try {
     const { jwt } = await strapiLogin()
     return jwt
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+async function createAddressComponent(component, token) {
+  try {
+    const { data } = await axios.post(
+      'http://localhost:1337/address-components',
+      component,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    return data
   } catch (error) {
     console.error(error)
   }
@@ -112,4 +115,6 @@ async function run() {
   }
 }
 
-run()
+// run()
+
+export { getToken }

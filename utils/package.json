@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "csv-parse": "^4.15.3",
     "dotenv": "^8.2.0"
   }
 }
