@@ -25,11 +25,11 @@
         />
         <button
           class="absolute my-auto rounded-full h-6 w-6 bg-white shadow group"
-          style="top: 72%; left: 55%;"
+          style="top: 72%; left: 55%"
         >
           <i
             class="align-middle material-icons-outlined text-gray-700 group-hover:text-blue-700"
-            style="font-size: 1rem;"
+            style="font-size: 1rem"
             >photo_camera</i
           >
         </button>
@@ -85,7 +85,7 @@
     },
     created() {
       const handleEscape = (e) => {
-        if (e.key === 'Esc' || e.key == 'Escape') {
+        if (e.key === 'Esc' || e.key === 'Escape') {
           this.isOpen = false
         }
       }
