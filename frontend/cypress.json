@@ -1,4 +1,9 @@
 {
+  "component": {
+    "componentFolder": "components",
+    "testFiles": "**/*cy.{js,jsx,ts,tsx}",
+    "video": false
+  },
   "env": {
     "browserPermissions": {
       "geolocation": "allow"
