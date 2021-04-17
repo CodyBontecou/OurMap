@@ -6,6 +6,7 @@ export const state = () => ({
   results: [],
   searching: false,
   focus: null,
+  layer: undefined,
 })
 
 export const getters = {
@@ -40,10 +41,10 @@ export const mutations = {
     state.zoom = zoom
   },
   zoomIn(state) {
-    state.zoom += 1
+    state.zoom += 2
   },
   zoomOut(state) {
-    state.zoom -= 1
+    state.zoom -= 2
   },
   setMap(state, map) {
     state.map = map
@@ -54,14 +55,8 @@ export const mutations = {
   setResults(state, results) {
     state.results = results
   },
-  setSearching(state, searching) {
-    state.searching = searching
-  },
   SET_SEARCHING(state, searching) {
     state.searching = searching
-  },
-  setFocus(state, obj) {
-    state.focus = obj
   },
   SET_FOCUS(state, obj) {
     state.focus = obj
@@ -78,16 +73,24 @@ export const actions = {
       await this.$strapi
         .find('locations', { _limit: '-1' })
         .then((response) => {
-          commit('setLocations', response)
+          const locations = response.map((location) => {
+            location.name = location.name
+              .toLowerCase()
+              .split(' ')
+              .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+              .join(' ')
+            return location
+          })
+          commit('setLocations', locations)
         })
     } catch (e) {
       console.log(e)
     }
   },
-  _setSearching: ({ commit }, payload) => {
+  setSearching: ({ commit }, payload) => {
     commit('SET_SEARCHING', payload)
   },
-  _setFocus: ({ commit }, payload) => {
+  setFocus: ({ commit }, payload) => {
     commit('SET_FOCUS', payload)
   },
 }

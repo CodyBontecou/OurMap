@@ -7,8 +7,6 @@
         :zoom="zoom"
         :center="center"
         :options="mapOptions"
-        @update:center="centerUpdated"
-        @update:zoom="zoomUpdated"
       >
         <l-tile-layer
           v-for="tileProvider in tileProviders"
@@ -29,12 +27,22 @@
         <v-marker-cluster>
           <l-marker
             v-for="location in locations"
+            :ref="`marker-${location.id}`"
             :key="location.id"
             :lat-lng="[location.latitude, location.longitude]"
-            @click="setFocus(location)"
           >
-            <l-popup>
-              {{ location.name }}
+            <l-popup :options="popupOptions">
+              <ul>
+                <li>
+                  <span class="font-medium">{{ location.name }}</span>
+                </li>
+                <li>
+                  <span class="font-medium">{{ location.tempF }} °F</span>
+                </li>
+                <li>
+                  <span class="font-medium">{{ location.tempC }} °C</span>
+                </li>
+              </ul>
             </l-popup>
           </l-marker>
         </v-marker-cluster>
@@ -52,6 +60,12 @@
             <i class="material-icons text-sm align-middle">gps_fixed</i>
             <span class="tooltip-text left capitalize">
               {{ i18n.location }}
+            </span>
+          </button>
+          <button id="resetViewBtn" class="btn tooltip" @click="resetView">
+            <i class="material-icons text-sm align-middle">restart_alt</i>
+            <span class="text-xs tooltip-text left capitalize">
+              {{ i18n.resetView }}
             </span>
           </button>
           <button
@@ -119,6 +133,9 @@
           height: 75,
           zoomLevelFixed: true,
         },
+        popupOptions: {
+          closeOnClick: false,
+        },
       }
     },
     computed: {
@@ -126,19 +143,22 @@
         locations: 'getLocations',
         zoom: 'getZoom',
         center: 'getCenter',
+        focus: 'getFocus',
       }),
       i18n() {
         return this.$t('map')
+      },
+    },
+    watch: {
+      focus() {
+        this.setView(this.focus)
+        this.$refs[`marker-${this.focus.id}`][0].mapObject.openPopup()
       },
     },
     mounted() {
       this.openStreetMapLayer = new this.$L.TileLayer(this.tileProviders[0].url)
       this.satelliteLayer = new this.$L.TileLayer(this.tileProviders[1].url)
       this.minimapLayer = this.satelliteLayer
-    },
-    destroyed() {
-      const minimap = this.$refs.minimap
-      minimap[0].removeEventListener('click', this.toggleLayer)
     },
     methods: {
       centerUpdated(center) {
@@ -154,16 +174,28 @@
       zoomUpdated(zoom) {
         this.$store.commit('setZoom', zoom)
       },
-      setFocus(obj) {
-        const that = this
-        this.$store.commit('setFocus', obj)
-        this.$root.$on('focus', (filter) => {
-          that.setView(filter)
-        })
+      resetView() {
+        const map = this.$refs.map.mapObject
+        map.setView(new this.$L.LatLng(39.8097343, -98.5556199), 5)
       },
       setView(obj) {
         const map = this.$refs.map.mapObject
-        map.setView(new this.$L.LatLng(obj.latitude, obj.longitude), 18)
+        map.setView(new this.$L.LatLng(obj.latitude, obj.longitude), 16)
+        this.setSatteliteLayer()
+      },
+      setOpenStreetMapsLayer() {
+        const minimap = this.$refs.minimap
+        this.minimapLayer = this.satelliteLayer
+        minimap.changeLayer(this.satelliteLayer)
+        this.tileProviders[0].visible = true
+        this.tileProviders[1].visible = false
+      },
+      setSatteliteLayer() {
+        const minimap = this.$refs.minimap
+        this.minimapLayer = this.openStreetMapLayer
+        minimap.changeLayer(this.openStreetMapLayer)
+        this.tileProviders[0].visible = false
+        this.tileProviders[1].visible = true
       },
       userLocation() {
         const that = this
@@ -192,19 +224,12 @@
         }
       },
       toggleLayer() {
-        const that = this
-        const minimap = this.$refs.minimap
         if (this.minimapLayer === this.satelliteLayer) {
-          this.minimapLayer = this.openStreetMapLayer
-          minimap.changeLayer(that.openStreetMapLayer)
-          this.tileProviders[0].visible = false
-          this.tileProviders[1].visible = true
+          this.setSatteliteLayer()
         } else if (this.minimapLayer === this.openStreetMapLayer) {
-          this.minimapLayer = this.satelliteLayer
-          minimap.changeLayer(that.satelliteLayer)
-          this.tileProviders[0].visible = true
-          this.tileProviders[1].visible = false
+          this.setOpenStreetMapsLayer()
         }
+        console.log(this.minimapLayer)
       },
       initToggleLayer() {
         const minimapGetter = document.getElementsByClassName(

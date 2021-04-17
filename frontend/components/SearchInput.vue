@@ -21,7 +21,7 @@
         <input
           id="searchInput"
           v-model="search"
-          class="focus:outline-none rounded-lg block w-full appearance-none placeholder-gray-700 placeholder-font-medium capitalize"
+          class="focus:outline-none block w-full appearance-none placeholder-gray-700 font-medium capitalize"
           type="text"
           :placeholder="i18n.placeholder"
           autocomplete="off"
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     props: {
@@ -78,6 +78,7 @@
     },
     computed: {
       ...mapGetters({
+        focus: 'getFocus',
         results: 'getResults',
         searching: 'getSearching',
       }),
@@ -85,7 +86,13 @@
         return this.$t('searchInput')
       },
     },
+    watch: {
+      focus() {
+        this.search = this.focus.name
+      },
+    },
     methods: {
+      ...mapActions({ setSearching: 'setSearching' }),
       onChange() {
         this.enableSearching()
         this.filterResults()
@@ -100,9 +107,9 @@
       },
       enableSearching() {
         if (!this.searching && this.search.length > 0) {
-          this.$store.commit('setSearching', true)
+          this.setSearching(true)
         } else if (this.search.length === 0) {
-          this.$store.commit('setSearching', false)
+          this.setSearching(false)
         }
       },
     },

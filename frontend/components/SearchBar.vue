@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     computed: {
@@ -28,9 +28,10 @@
       document.removeEventListener('click', this.handleClickOutside)
     },
     method: {
+      ...mapActions({ setSearching: 'setSearching' }),
       handleClickOutside(evt) {
         if (!this.$el.contains(evt.target)) {
-          this.$store.commit('setSearching', false)
+          this.setSearching(false)
         }
       },
     },

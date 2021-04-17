@@ -13,6 +13,7 @@ export default {
   // ****************************** Map ******************************
   map: {
     location: 'location',
+    resetView: 'reset view',
     zoomIn: 'zoom in',
     zoomOut: 'zoom out',
   },

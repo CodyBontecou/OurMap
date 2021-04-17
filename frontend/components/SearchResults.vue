@@ -5,10 +5,10 @@
         v-for="(result, i) in results"
         :key="i"
         class="p-2 mx-2 flex rounded-sm autocomplete-result hover:bg-gray-200 cursor-pointer"
-        @click="emitFocus(result)"
+        @click="resultClicked(result)"
       >
         <i class="pl-3 pr-5 material-icons text-xl text-gray-500">room</i>
-        <div class="text-sm text-gray-700 truncate">
+        <div class="text-sm text-gray-700">
           {{ result.name }}
         </div>
       </li>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     props: {
@@ -31,9 +31,16 @@
       ...mapGetters({ searching: 'getSearching', focus: 'getFocus' }),
     },
     methods: {
+      ...mapActions({ setFocus: 'setFocus', setSearching: 'setSearching' }),
       emitFocus(obj) {
-        console.log(obj)
         this.$root.$emit('focus', obj)
+      },
+      resultClicked(result) {
+        this.stopSearching()
+        this.setFocus(result)
+      },
+      stopSearching() {
+        this.setSearching(false)
       },
     },
   }

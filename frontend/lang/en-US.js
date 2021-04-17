@@ -7,12 +7,13 @@ export default {
 
   // ****************************** Search Input ******************************
   searchInput: {
-    placeholder: 'search our map',
+    placeholder: 'search hotspringers',
   },
 
   // ****************************** Map ******************************
   map: {
     location: 'location',
+    resetView: 'reset view',
     zoomIn: 'zoom in',
     zoomOut: 'zoom out',
   },
