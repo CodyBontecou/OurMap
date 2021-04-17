@@ -1,7 +1,7 @@
-const strapiUrl =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:1337'
-    : 'https://hotspringers-api.herokuapp.com'
+const strapiUrl = 'https://hotspringers-api.herokuapp.com'
+// process.env.NODE_ENV === 'development'
+//   ? 'http://localhost:1337'
+//   : 'https://hotspringers-api.herokuapp.com'
 
 export default {
   target: 'static',
