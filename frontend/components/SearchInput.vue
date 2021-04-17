@@ -4,7 +4,7 @@
     :class="{ 'border-b': results.length > 0 }"
     style="height: 44px"
   >
-    <form class="flex">
+    <form class="flex" @submit.prevent>
       <div class="flex items-center pl-3 pr-5 tooltip">
         <button>
           <i class="material-icons text-xl text-gray-700 hover:text-gray-900">
@@ -20,13 +20,13 @@
         <label for="searchInput"></label>
         <input
           id="searchInput"
-          v-model="search"
+          :value="search"
           class="focus:outline-none block w-full appearance-none placeholder-gray-700 font-medium capitalize"
           type="text"
           :placeholder="i18n.placeholder"
           autocomplete="off"
           style="width: 215px"
-          @input="onChange"
+          @input="(evt) => onChange(evt)"
         />
       </div>
 
@@ -97,7 +97,8 @@
     },
     methods: {
       ...mapActions({ setSearching: 'setSearching' }),
-      onChange() {
+      onChange(event) {
+        this.search = event.target.value
         this.enableSearching()
         this.filterResults()
       },
