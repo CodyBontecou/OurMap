@@ -1,6 +1,10 @@
 <template>
-  <div class="flex flex-col z-1000" :class="{ 'py-2': results.length > 0 }">
-    <ul class="w-full autocomplete-results" style="overflow: auto">
+  <div class="flex flex-col z-1000">
+    <ul
+      class="w-full autocomplete-results"
+      :class="{ 'py-2': results.length > 0 }"
+      style="overflow: auto; max-height: 200px"
+    >
       <li
         v-for="(result, i) in results"
         :key="i"
@@ -32,9 +36,6 @@
     },
     methods: {
       ...mapActions({ setFocus: 'setFocus', setSearching: 'setSearching' }),
-      emitFocus(obj) {
-        this.$root.$emit('focus', obj)
-      },
       resultClicked(result) {
         this.stopSearching()
         this.setFocus(result)

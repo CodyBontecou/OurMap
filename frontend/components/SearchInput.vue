@@ -98,11 +98,9 @@
         this.filterResults()
       },
       filterResults() {
-        const results = this.items
-          .filter((item) =>
-            item.name.toLowerCase().includes(this.search.toLowerCase())
-          )
-          .splice(-5)
+        const results = this.items.filter((item) =>
+          item.name.toLowerCase().includes(this.search.toLowerCase())
+        )
         this.$store.commit('setResults', results)
       },
       enableSearching() {
