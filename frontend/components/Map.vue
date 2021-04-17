@@ -7,6 +7,8 @@
         :zoom="zoom"
         :center="center"
         :options="mapOptions"
+        @update:center="centerUpdated"
+        @update:zoom="zoomUpdated"
       >
         <l-tile-layer
           v-for="tileProvider in tileProviders"
@@ -96,7 +98,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     data() {
@@ -151,8 +153,10 @@
     },
     watch: {
       focus() {
-        this.setView(this.focus)
-        this.$refs[`marker-${this.focus.id}`][0].mapObject.openPopup()
+        if (this.focus) {
+          this.setView(this.focus)
+          this.$refs[`marker-${this.focus.id}`][0].mapObject.openPopup()
+        }
       },
     },
     mounted() {
@@ -161,6 +165,7 @@
       this.minimapLayer = this.satelliteLayer
     },
     methods: {
+      ...mapActions({ setFocus: 'setFocus' }),
       centerUpdated(center) {
         this.$store.commit('setCenter', center)
       },
@@ -177,6 +182,8 @@
       resetView() {
         const map = this.$refs.map.mapObject
         map.setView(new this.$L.LatLng(39.8097343, -98.5556199), 5)
+        this.setOpenStreetMapsLayer()
+        this.setFocus(null)
       },
       setView(obj) {
         const map = this.$refs.map.mapObject
@@ -229,7 +236,6 @@
         } else if (this.minimapLayer === this.openStreetMapLayer) {
           this.setOpenStreetMapsLayer()
         }
-        console.log(this.minimapLayer)
       },
       initToggleLayer() {
         const minimapGetter = document.getElementsByClassName(

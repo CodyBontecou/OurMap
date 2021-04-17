@@ -88,7 +88,11 @@
     },
     watch: {
       focus() {
-        this.search = this.focus.name
+        if (this.focus) {
+          this.search = this.focus.name
+        } else {
+          this.search = ''
+        }
       },
     },
     methods: {
