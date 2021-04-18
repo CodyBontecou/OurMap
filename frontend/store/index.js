@@ -31,6 +31,13 @@ export const getters = {
   getFocus(state) {
     return state.focus
   },
+  directionsLink(state) {
+    if (state.focus) {
+      return `https://www.google.com/maps/dir/?api=1&destination=${state.focus.latitude}, ${state.focus.longitude}`
+    } else {
+      return '#'
+    }
+  },
 }
 
 export const mutations = {

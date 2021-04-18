@@ -46,11 +46,11 @@
       <div class="divider bg-gray-200"></div>
 
       <div class="flex items-center px-3 tooltip">
-        <button>
+        <a :href="directionsLink" target="_blank">
           <i class="material-icons text-xl text-blue-500 hover:text-blue-600">
             directions
           </i>
-        </button>
+        </a>
         <span class="tooltip-text bottom text-xs font-medium">
           {{ $t('directions') }}
         </span>
@@ -77,6 +77,7 @@
     },
     computed: {
       ...mapGetters({
+        directionsLink: 'directionsLink',
         focus: 'getFocus',
         results: 'getResults',
         searching: 'getSearching',

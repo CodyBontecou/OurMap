@@ -32,19 +32,38 @@
             :ref="`marker-${location.id}`"
             :key="location.id"
             :lat-lng="[location.latitude, location.longitude]"
+            @click="setFocus(location)"
           >
             <l-popup :options="popupOptions">
-              <ul>
-                <li>
-                  <span class="font-medium">{{ location.name }}</span>
-                </li>
-                <li>
-                  <span class="font-medium">{{ location.tempF }} °F</span>
-                </li>
-                <li>
-                  <span class="font-medium">{{ location.tempC }} °C</span>
-                </li>
-              </ul>
+              <div class="flex flex-col">
+                <div>
+                  <span class="mt-1 font-semibold">{{ location.name }}</span>
+                </div>
+                <div class="mt-1 flex">
+                  <div class="flex flex-col">
+                    <div>
+                      <span class="font-medium">{{ location.tempF }} °F</span>
+                    </div>
+                    <div>
+                      <span class="font-medium">{{ location.tempC }} °C</span>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute right-0 bottom-0 items-center px-2 pb-2 tooltip"
+                  >
+                    <a :href="directionsLink" target="_blank">
+                      <i
+                        class="material-icons text-xl text-blue-500 hover:text-blue-600"
+                      >
+                        directions
+                      </i>
+                    </a>
+                    <span class="ml-2 tooltip-text right text-xs font-medium">
+                      {{ $t('directions') }}
+                    </span>
+                  </div>
+                </div>
+              </div>
             </l-popup>
           </l-marker>
         </v-marker-cluster>
@@ -142,6 +161,7 @@
     },
     computed: {
       ...mapGetters({
+        directionsLink: 'directionsLink',
         locations: 'getLocations',
         zoom: 'getZoom',
         center: 'getCenter',
