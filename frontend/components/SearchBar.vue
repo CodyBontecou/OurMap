@@ -1,8 +1,7 @@
 <template>
   <div
     id="searchBarContainer"
-    class="absolute z-1000 ml-2 mt-2 flex flex-col rounded-lg bg-white top-0 left-0"
-    style="max-width: 356px"
+    class="absolute z-1000 ml-2 mt-2 flex flex-col rounded-lg bg-white top-0 left-0 md:max-w-356"
   >
     <SearchInput :items="locations" />
     <SearchResults v-show="searching" :results="results" />

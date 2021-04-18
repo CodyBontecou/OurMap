@@ -21,6 +21,9 @@ module.exports = {
       margin: {
         14: '3.25rem',
       },
+      maxWidth: {
+        356: '356px',
+      },
     },
   },
   variants: {

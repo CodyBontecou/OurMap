@@ -25,7 +25,6 @@
           type="text"
           :placeholder="i18n.placeholder"
           autocomplete="off"
-          style="width: 215px"
           @input="(evt) => onChange(evt)"
         />
       </div>
