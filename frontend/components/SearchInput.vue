@@ -21,7 +21,7 @@
         <input
           id="searchInput"
           :value="search"
-          class="focus:outline-none block w-full appearance-none placeholder-gray-700 font-medium capitalize"
+          class="focus:outline-none block w-full md:w-215 appearance-none placeholder-gray-700 font-medium capitalize"
           type="text"
           :placeholder="i18n.placeholder"
           autocomplete="off"
