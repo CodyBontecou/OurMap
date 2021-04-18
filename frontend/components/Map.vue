@@ -49,9 +49,9 @@
           </l-marker>
         </v-marker-cluster>
 
-        <l-control position="topright">
+        <!-- <l-control position="topright">
           <Navigation />
-        </l-control>
+        </l-control> -->
 
         <l-control position="bottomright">
           <button
@@ -166,6 +166,7 @@
     },
     methods: {
       ...mapActions({ setFocus: 'setFocus' }),
+      // TODO: Removing vuex from this equation might boost performance.
       centerUpdated(center) {
         this.$store.commit('setCenter', center)
       },
