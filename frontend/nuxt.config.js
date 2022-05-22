@@ -1,9 +1,11 @@
+import { defineNuxtConfig } from '@nuxt/bridge'
+
 const strapiUrl = 'https://hotspringers-api.herokuapp.com'
 // process.env.NODE_ENV === 'development'
 //   ? 'http://localhost:1337'
 //   : 'https://hotspringers-api.herokuapp.com'
 
-export default {
+export default defineNuxtConfig({
   target: 'static',
   head: {
     title: 'Hotspringers | Mapped Interests | Open Sourced | Crowd Sourced',
@@ -35,19 +37,8 @@ export default {
     { src: '@/plugins/leaflet-minimap.js', mode: 'client' },
   ],
   components: true,
-  buildModules: [
-    '@nuxt/typescript-build',
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/sitemap',
-  ],
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    '@nuxt/content',
-    '@nuxtjs/strapi',
-    'nuxt-leaflet',
-    'nuxt-i18n',
-  ],
+  buildModules: [],
+  modules: ['nuxt-leaflet', '@nuxtjs/tailwindcss'],
   strapi: {
     url: strapiUrl,
     entities: ['locations', 'categories'],
@@ -90,4 +81,4 @@ export default {
       },
     },
   },
-}
+})
