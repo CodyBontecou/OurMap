@@ -120,3 +120,6 @@ frontend/cypress/integration/examples
 frontend/static/sw.js
 
 utils/data
+
+# Nuxt Bridge
+.output
