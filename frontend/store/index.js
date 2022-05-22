@@ -60,7 +60,13 @@ export const mutations = {
     state.center = center
   },
   setResults(state, results) {
-    state.results = results
+    state.results = results.sort((a, b) => {
+      const nameA = a.name.toLowerCase()
+      const nameB = b.name.toLowerCase()
+      if (nameA < nameB) return -1
+      if (nameA > nameB) return 1
+      return 0
+    })
   },
   SET_SEARCHING(state, searching) {
     state.searching = searching
@@ -75,24 +81,42 @@ export const actions = {
     await dispatch('fetchLocations')
   },
   // TODO: Currently only getting the first 100 due to pagination
-  async fetchLocations({ commit }) {
-    try {
-      await this.$strapi
-        .find('locations', { _limit: '-1' })
-        .then((response) => {
-          const locations = response.map((location) => {
-            location.name = location.name
-              .toLowerCase()
-              .split(' ')
-              .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-              .join(' ')
-            return location
-          })
-          commit('setLocations', locations)
-        })
-    } catch (e) {
-      console.log(e)
-    }
+  fetchLocations({ commit }) {
+    commit('setLocations', [
+      {
+        id: 71,
+        latitude: '51.9400',
+        longitude: '178.500',
+        name: 'Hot Spring On Little Sitkin Island',
+        description: 'a',
+        created_by: 'a',
+        updated_by: 'a',
+        created_at: 'fY',
+        updated_at: 'fY',
+        tempF: 'b',
+        tempC: 'b',
+        image: [],
+        categories: [],
+        address_components: [],
+      },
+    ])
+    // try {
+    //   await this.$strapi
+    //     .find('locations', { _limit: '-1' })
+    //     .then((response) => {
+    //       const locations = response.map((location) => {
+    //         location.name = location.name
+    //           .toLowerCase()
+    //           .split(' ')
+    //           .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    //           .join(' ')
+    //         return location
+    //       })
+    //       commit('setLocations', locations)
+    //     })
+    // } catch (e) {
+    //   console.log(e)
+    // }
   },
   setSearching: ({ commit }, payload) => {
     commit('SET_SEARCHING', payload)
