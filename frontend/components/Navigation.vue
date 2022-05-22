@@ -20,7 +20,60 @@
     },
     computed: {
       apps() {
-        return this.$t('apps')
+        // return this.$t('apps')
+        return {
+          name: 'apps',
+          apps: [
+            {
+              name: 'account',
+              img: {
+                src: 'cody.jpg',
+                alt: '',
+              },
+              to: 'account',
+            },
+            {
+              name: 'favorites',
+              img: {
+                src: 'logo.png',
+                alt: '',
+              },
+              to: '#',
+            },
+            {
+              name: 'blog',
+              img: {
+                src: 'logo.png',
+                alt: '',
+              },
+              to: '#',
+            },
+            {
+              name: 'contribute',
+              img: {
+                src: 'logo.png',
+                alt: '',
+              },
+              to: '#',
+            },
+            {
+              name: 'about',
+              img: {
+                src: 'logo.png',
+                alt: '',
+              },
+              to: 'about',
+            },
+            {
+              name: 'contact',
+              img: {
+                src: 'logo.png',
+                alt: '',
+              },
+              to: '#',
+            },
+          ],
+        }
       },
     },
   }

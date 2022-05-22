@@ -32,8 +32,8 @@
             :ref="`marker-${location.id}`"
             :key="location.id"
             :lat-lng="[location.latitude, location.longitude]"
-            @click="setFocus(location)"
           >
+            <!-- @click="setFocus(location)" -->
             <l-popup :options="popupOptions">
               <div class="flex flex-col">
                 <div>
@@ -59,7 +59,8 @@
                       </i>
                     </a>
                     <span class="ml-2 tooltip-text right text-xs font-medium">
-                      {{ $t('directions') }}
+                      <!-- {{ $t('directions') }} -->
+                      directions
                     </span>
                   </div>
                 </div>
@@ -68,9 +69,9 @@
           </l-marker>
         </v-marker-cluster>
 
-        <!-- <l-control position="topright">
+        <l-control position="topright">
           <Navigation />
-        </l-control> -->
+        </l-control>
 
         <l-control position="bottomright">
           <button
@@ -79,14 +80,12 @@
             @click="userLocation"
           >
             <i class="material-icons text-sm align-middle">gps_fixed</i>
-            <span class="tooltip-text left capitalize">
-              {{ i18n.location }}
-            </span>
+            <span class="tooltip-text left capitalize"> location </span>
           </button>
           <button id="resetViewBtn" class="btn tooltip" @click="resetView">
             <i class="material-icons text-sm align-middle">restart_alt</i>
             <span class="text-xs tooltip-text left capitalize">
-              {{ i18n.resetView }}
+              reset view
             </span>
           </button>
           <button
@@ -96,9 +95,7 @@
             @click="zoomIn"
           >
             <i class="material-icons text-sm align-middle">add</i>
-            <span class="text-xs tooltip-text left capitalize">
-              {{ i18n.zoomIn }}
-            </span>
+            <span class="text-xs tooltip-text left capitalize"> zoom in </span>
           </button>
           <button
             id="zoomOutBtn"
@@ -106,9 +103,7 @@
             @click="zoomOut"
           >
             <i class="material-icons text-sm align-middle">remove</i>
-            <span class="tooltip-text left capitalize">
-              {{ i18n.zoomOut }}
-            </span>
+            <span class="tooltip-text left capitalize"> zoom out </span>
           </button>
         </l-control>
       </l-map>
@@ -167,9 +162,9 @@
         center: 'getCenter',
         focus: 'getFocus',
       }),
-      i18n() {
-        return this.$t('map')
-      },
+      // i18n() {
+      //   return this.$t('map')
+      // },
     },
     watch: {
       focus() {

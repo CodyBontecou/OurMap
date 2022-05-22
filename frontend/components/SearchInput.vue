@@ -12,7 +12,8 @@
           </i>
         </button>
         <span class="tooltip-text bottom text-xs font-medium">
-          {{ $t('menu') }}
+          <!-- {{ $t('menu') }} -->
+          menu
         </span>
       </div>
 
@@ -39,7 +40,8 @@
           </i>
         </button>
         <span class="tooltip-text bottom text-xs font-medium">
-          {{ $t('search') }}
+          <!-- {{ $t('search') }} -->
+          search
         </span>
       </div>
 
@@ -52,7 +54,8 @@
           </i>
         </a>
         <span class="tooltip-text bottom text-xs font-medium">
-          {{ $t('directions') }}
+          <!-- {{ $t('directions') }} -->
+          directions
         </span>
       </div>
     </form>
@@ -83,7 +86,9 @@
         searching: 'getSearching',
       }),
       i18n() {
-        return this.$t('searchInput')
+        return {
+          placeholder: 'search hotspringers',
+        }
       },
     },
     watch: {

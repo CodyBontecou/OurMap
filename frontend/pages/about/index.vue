@@ -3,7 +3,8 @@
     <div>
       <Logo />
       <h1 class="title block font-light">
-        {{ $t('appName') }}
+        <!-- {{ $t('appName') }} -->
+        hotspringers
       </h1>
     </div>
   </div>
